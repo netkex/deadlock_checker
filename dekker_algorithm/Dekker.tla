@@ -9,22 +9,19 @@ CONSTANTS
     FINAL_STATE
 
 VARIABLES
-  wants_to_enter, 
   turn,
   in_critical, 
   current_state
 
-vars == <<wants_to_enter, turn, in_critical, current_state>>
+vars == <<turn, in_critical, current_state>>
 
 TypeOK ==
-  /\ wants_to_enter \in [PROCESSES -> BOOLEAN]
   /\ turn \in 0..1
   /\ in_critical \in [PROCESSES -> BOOLEAN ]
   /\ current_state \in STATES
 
 Init ==
   /\ turn = 0
-  /\ wants_to_enter = [p \in PROCESSES |-> FALSE]
   /\ in_critical = [p \in PROCESSES |-> FALSE]
   /\ current_state = [p \in PROCESSES |-> 0]
 
@@ -44,26 +41,26 @@ Wait_while(p) ==
     \/ (
         /\ turn = p
         /\ current_state' = [current_state EXCEPT ![p] = @ + 1]
-        /\ UNCHANGED <<turn, wants_to_enter, in_critical>>)
+        /\ UNCHANGED <<turn, in_critical>>)
 
 Enter_critical(p) ==
     /\ in_critical' = [in_critical EXCEPT ![p] = TRUE]
     /\ current_state'= [current_state EXCEPT ![p] = @ + 1]
-    /\ UNCHANGED <<turn, wants_to_enter>>
+    /\ UNCHANGED <<turn>>
 
 Do_critical(p) == 
     /\ current_state' = [current_state EXCEPT ![p] = @ + 1] 
-    /\ UNCHANGED <<turn, wants_to_enter, in_critical>>
+    /\ UNCHANGED <<turn, in_critical>>
 
 Exit_critical(p) == 
     /\ in_critical' = [in_critical EXCEPT ![p] = FALSE]
     /\ current_state' = [current_state EXCEPT ![p] = @ + 1]
-    /\ UNCHANGED <<turn, wants_to_enter>>
+    /\ UNCHANGED <<turn>>
 
 Set_turn(p, value) == 
     /\ turn' = value
     /\ current_state' = [current_state EXCEPT ![p] = @ + 1] 
-    /\ UNCHANGED <<in_critical, wants_to_enter>>
+    /\ UNCHANGED <<in_critical>>
 
 Run_process(p) == 
     \/ (current_state[p] = 0 /\ Wait_while(p))
