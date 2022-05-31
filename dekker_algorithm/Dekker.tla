@@ -22,8 +22,8 @@ vars == <<turn, in_critical, current_state, interested>>
 
 TypeOK ==
   /\ turn \in 0..1
-  /\ in_critical \in [PROCESSES -> BOOLEAN]
   /\ current_state \in STATES
+  /\ in_critical \in [PROCESSES -> BOOLEAN]
   /\ interested \in [PROCESSES -> BOOLEAN]
 
 Init ==
@@ -74,7 +74,7 @@ Enter_while_section(p) ==
     \/ (current_state[p] = 3 /\ Set_intersted_increment_state(p, FALSE))
     \/ (current_state[p] = 4 /\ (
         \/ (turn = 1 - p /\ Set_state(p, 4))
-        \/ (turn /= p /\ Increment_state(p))))
+        \/ (turn /= 1 - p /\ Increment_state(p))))
     \/ (current_state[p] = 5 /\ Set_intersted_increment_state(p, TRUE))
     \/ (current_state[p] = 6 /\ Set_state(p, 1))
     \/ (current_state[p] = 7 /\ Set_critical_increment_state(p, TRUE))
@@ -95,10 +95,6 @@ Run_process(p) ==
     \/ (current_state[p] \in ENTER_CRITICAL_SECTION_STATES /\ Enter_critical(p))
     \/ (current_state[p] = CRITICAL_STATE /\ Do_critical(p))
     \/ (current_state[p] \in EXITING_CRITICAL_SECTION_STATES /\ Exit_critical(p))
-
-\* Run_process(p) == 
-\*     \/ (current_state[p] = 0 /\ UNCHANGED vars)
-\*     \/ FALSE
 
 
 Next == 
