@@ -65,29 +65,20 @@ Set_turn(p, value) ==
     /\ current_state' = [current_state EXCEPT ![p] = @ + 1] 
     /\ UNCHANGED <<in_critical, wants_to_enter>>
 
-Run_process_0 == 
-    \/ (current_state[0] = 0 /\ Wait_while(0))
-    \/ (current_state[0] = 1 /\ Enter_critical(0))
-    \/ (current_state[0] = 2 /\ Do_critical(0))
-    \/ (current_state[0] = 3 /\ Exit_critical(0))
-    \/ (current_state[0] = 4 /\ Set_turn(0, 1))
-
-Run_process_1 == 
-    \/ (current_state[1] = 0 /\ Wait_while(1))
-    \/ (current_state[1] = 1 /\ Enter_critical(1))
-    \/ (current_state[1] = 2 /\ Do_critical(1))
-    \/ (current_state[1] = 3 /\ Exit_critical(1))
-    \/ (current_state[1] = 4 /\ Set_turn(1, 0))
+Run_process(p) == 
+    \/ (current_state[p] = 0 /\ Wait_while(p))
+    \/ (current_state[p] = 1 /\ Enter_critical(p))
+    \/ (current_state[p] = 2 /\ Do_critical(p))
+    \/ (current_state[p] = 3 /\ Exit_critical(p))
+    \/ (current_state[p] = 4 /\ Set_turn(p, 1 - p))
 
 
 Next == 
-    \/ Run_process_0 
-    \/ Run_process_1 
+    \/ \E p \in PROCESSES: Run_process(p)
     \/ End_program
 
 Fairness ==
-    /\ WF_vars(Run_process_0)
-    /\ WF_vars(Run_process_1)
+    \A p \in PROCESSES: WF_vars(Run_process(p))
 
 Spec == Init /\ [][Next]_vars /\ Fairness
 
