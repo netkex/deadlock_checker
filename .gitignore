@@ -1,29 +1,6 @@
 # Reference: https://github.com/jameshfisher/tlaplus/blob/master/.gitignore
 
-# TLA+ Toolbox
-# Exclude all files related to TLA+ Toolbox
-# *.toolbox/**
-
-*.toolbox/*.launch
-*.toolbox/*.pmap
-
-# TLA+ Toolbox models
-*.toolbox/**/*.tla
-*.toolbox/**/*.out
-*.toolbox/**/*.cfg
-
-# PlusCal
-*.old
-
-# LaTex output
-*.toolbox/*aux
-*.toolbox/*.log
-*.toolbox/*.pdf
-*.toolbox/*.tex
-*aux
-*.log
-*.pdf
-*.tex
-
+*.out
+states/
 # Vim backup file
 *~
