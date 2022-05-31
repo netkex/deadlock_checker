@@ -87,9 +87,9 @@ Do_critical(p) ==
     /\ Increment_state(p)
 
 Exit_critical(p) == 
-    /\ (current_state[p] = 9 /\ Set_critical_increment_state(p, FALSE))
-    /\ (current_state[p] = 10 /\ Set_turn_increment_state(p, 1 - p))
-    /\ (current_state[p] = 11 /\ Set_intersted_increment_state(p, FALSE))
+    \/ (current_state[p] = 9 /\ Set_critical_increment_state(p, FALSE))
+    \/ (current_state[p] = 10 /\ Set_turn_increment_state(p, 1 - p))
+    \/ (current_state[p] = 11 /\ Set_intersted_increment_state(p, FALSE))
 
 Run_process(p) == 
     \/ (current_state[p] \in ENTER_CRITICAL_SECTION_STATES /\ Enter_critical(p))
