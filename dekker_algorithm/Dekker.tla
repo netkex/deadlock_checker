@@ -85,7 +85,14 @@ Next ==
     \/ Run_process_1 
     \/ End_program
 
-Spec == Init /\ [][Next]_vars
+Fairness ==
+    /\ WF_vars(Run_process_0)
+    /\ WF_vars(Run_process_1)
+
+Spec == Init /\ [][Next]_vars /\ Fairness
+
+Ends == 
+    <>[] \A s \in PROCESSES: current_state[s] = FINAL_STATE
 
 --------------------------------------
 
