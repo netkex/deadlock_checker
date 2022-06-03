@@ -1,7 +1,29 @@
 ---- MODULE Swap ----
 
-EXTENDS Integers
+(***************************************)
+(* State |    Mutual Exclusion Code    *)
+(* init  | int bolt = 0; // mutual     *)
+(********|******************************)
+(* init  | int key = 0;                *)
+(* 0     | while (key != 0)            *)
+(* 1     |     swap(key, bolt);        *)
+(* 2     | start_critical();           *)
+(* 3     | action_in_critical();       *)
+(* 4     | end_critical();             *)
+(* 5     | swap(key, bolt);            *)
+(***************************************)
 
+(************************************)
+(*           Swap Code              *)
+(************************************)
+(*  void swap(int* r, int* mem) {   *)
+(*      int temp = *mem;            *)
+(*      *mem = *r;                  *)
+(*      *r = temp;                  *)
+(*  }                               *)
+(************************************)
+
+EXTENDS Integers
 
 CONSTANTS 
   PROCESSES,

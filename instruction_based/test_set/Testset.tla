@@ -1,7 +1,30 @@
 ---- MODULE Testset ----
 
-EXTENDS Integers
+(***************************************)
+(* State |    Mutual Exclusion Code    *)
+(* init  | int bolt = 0; // mutual     *)
+(********|******************************)
+(* 0, 1  | while (!testset(bolt))      *)
+(*       |     ; // активное ожидание  *)
+(* 2     | start_critical();           *)
+(* 3     | action_in_critical();       *)
+(* 4     | end_critical();             *)
+(* 5     | bolt = 0;                   *)
+(***************************************)
 
+(***********************************)
+(*       test-set Code             *)
+(***********************************)
+(* bool testset(int i) {           *)
+(*     if (i == 0) {               *)
+(*         i = 1;                  *)
+(*         return true;            *)
+(*     } else                      *)
+(*         return false;           *)
+(* }                               *)
+(***********************************)
+
+EXTENDS Integers
 
 CONSTANTS 
   PROCESSES,
