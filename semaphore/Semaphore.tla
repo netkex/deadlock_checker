@@ -17,10 +17,13 @@ VARIABLES
 vars == <<semaphore, in_critical, current_state, blocked>>
 
 TypeOK ==
-  /\ semaphore \in -1..1
+  /\ semaphore \in Int
   /\ in_critical \in [PROCESSES -> BOOLEAN]
   /\ current_state \in [PROCESSES -> STATES]
   /\ blocked \in [PROCESSES -> BOOLEAN]
+
+Semaphore_is_good ==
+  /\ semaphore <= 1
 
 Init ==
   /\ semaphore = 1
@@ -101,7 +104,7 @@ Ends ==
 
 --------------------------------------
 
-PROCESSES_const == 0..1
+PROCESSES_const == 0..4
 STATES_const == 0..FINAL_STATE
 
 ====
