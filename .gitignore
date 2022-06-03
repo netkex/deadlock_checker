@@ -1,0 +1,6 @@
+# Reference: https://github.com/jameshfisher/tlaplus/blob/master/.gitignore
+
+*.out
+states/
+# Vim backup file
+*~
