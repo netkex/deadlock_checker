@@ -1,7 +1,21 @@
 ---- MODULE Dekker ----
 
-EXTENDS Integers
+(*******************************************************************************)
+(* State |                   Mutual Exclusion Code                             *)
+(* init  |        bool interested[2] = {false, false};  // mutal               *)
+(********|**********************************************************************)
+(*       | Process 0                        | Process 1                        *)
+(********|**********************************|***********************************)
+(* 0     | interested[0] = true;            | interested[1] = true;            *)
+(* 1     | while (interested[1])            | while (interested[0])            *)
+(*       |     ; // Активное ожидание       |     ; // Активное ожидание       *)
+(* 2     | start_critical();                | start_critical();                *)
+(* 3     | action_in_critical();            | action_in_critical();            *)
+(* 4     | end_critical();                  | end_critical();                  *)
+(* 5     | interested[0] = false;           | interested[1] = false;           *)
+(*******************************************************************************)
 
+EXTENDS Integers
 
 CONSTANTS 
   PROCESSES,
