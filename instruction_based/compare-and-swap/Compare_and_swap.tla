@@ -108,7 +108,7 @@ Ends ==
 
 --------------------------------------
 
-PROCESSES_const == 0..1
+PROCESSES_const == 0..5
 LOCK_STATES_const == 0..1
 UNLOCK_STATES_const == {5}
 STATES_const == 0..FINAL_STATE
