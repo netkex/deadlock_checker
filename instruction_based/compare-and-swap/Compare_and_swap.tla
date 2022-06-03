@@ -65,8 +65,10 @@ Init ==
   /\ compare_and_swap_result = [p \in PROCESSES |-> 0]
 
 Exclusion == 
-  \/ in_critical[0] = FALSE 
-  \/ in_critical[1] = FALSE
+  ~ \E p1, p2 \in PROCESSES:
+    /\ p1 /= p2
+    /\ in_critical[p1]
+    /\ in_critical[p2] 
 
 End_program == 
   /\ current_state[0] = FINAL_STATE
