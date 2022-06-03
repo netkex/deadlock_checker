@@ -1,7 +1,23 @@
 ---- MODULE Peterson ----
 
-EXTENDS Integers
+(*********************************************************)
+(* State |  Mutual Exclusion Code                        *)
+(*       | // mutual variables                           *)
+(* init  | int turn;                                     *)
+(* init  | bool interested[2] = {false, false};          *)
+(********|************************************************)
+(*       | // enter critical section, p - process        *)
+(* 0     | interested[p] = true;                         *)
+(* 1     | turn = 1 - p;                                 *)
+(* 2     | while (turn == 1 - p && interested[1 - p]))   *)
+(*       |     ; // Активное ожидание                    *)
+(* 3     | action_in_critical();                         *)
+(*       | // exit critical section                      *)
+(* 4     | end_critical();                               *)
+(* 5     | interested[p] = false;                        *)
+(*********************************************************)
 
+EXTENDS Integers
 
 CONSTANTS 
   PROCESSES,
